@@ -21,6 +21,7 @@ if st.button("Predict"):
         proba = model.predict_proba(vec)[0]
         classes = list(model.classes_)
         spam_prob = proba[classes.index("spam")]
+        ham_prob = proba[classes.index("ham")]
 
         if spam_prob >= 0.5:
             st.error("⚠️ SPAM")
@@ -29,6 +30,8 @@ if st.button("Predict"):
 
         st.write(f"Spam Probability: {spam_prob*100:.1f}%")
         st.progress(float(spam_prob))
+        st.write(f"Ham Probability: {ham_prob*100:.1f}%")
+        st.progress(float(ham_prob))
     else:
         st.warning("Please enter a message to classify.")
 
@@ -63,7 +66,7 @@ with col3:
     fig2, ax2 = plt.subplots(figsize=(4, 4))
     names = list(results.keys())
     scores = [results[n]["accuracy"] for n in names]
-    colors = ["purple" if n == best_model_name else "lightgray" for n in names]
+    colors = ["darkblue" if n == best_model_name else "lightgray" for n in names]
     ax2.bar(names, scores, color=colors)
     ax2.set_ylim(0, 1.05)
     ax2.set_ylabel("Accuracy")
